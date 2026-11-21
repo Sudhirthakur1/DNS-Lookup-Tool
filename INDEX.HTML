@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DNS Lookup Tool</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            padding: 50px;
+        }
+
+        .container {
+            background: white;
+            max-width: 600px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #222;
+        }
+
+        input {
+            width: 95%;
+            padding: 12px;
+            margin: 15px 0;
+        }
+
+        button {
+            background: #2474c6;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        th {
+            background: #2474c6;
+            color: white;
+        }
+        * {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 30px 15px;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #141e30, #4776e6);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 950px;
+    margin: 40px auto;
+    padding: 35px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+}
+
+h1 {
+    text-align: center;
+    color: #243b55;
+    font-size: 35px;
+}
+
+label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+button {
+    padding: 14px 25px;
+    background: linear-gradient(90deg, #4776e6, #6842c2);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th {
+    background: #3159a5;
+    color: white;
+    padding: 15px;
+    text-align: left;
+}
+
+td {
+    padding: 13px;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background: #edf3ff;
+}
+/* Professional Dashboard Improvements */
+
+body {
+    background: linear-gradient(135deg, #0f172a, #1e40af, #312e81);
+    padding: 30px 15px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 40px;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+h1 {
+    color: #1e3a8a;
+    font-size: 38px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 35px;
+}
+
+h1::after {
+    content: "Domain Information & DNS Records Finder";
+    display: block;
+    font-size: 14px;
+    color: #64748b;
+    font-weight: normal;
+    margin-top: 12px;
+    letter-spacing: 0;
+}
+
+label {
+    font-size: 16px;
+    color: #334155;
+    font-weight: bold;
+}
+
+input {
+    background: #f8fafc;
+    border: 2px solid #cbd5e1;
+    padding: 16px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #2563eb;
+    background: white;
+    outline: none;
+}
+
+button {
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37,99,235,0.3);
+}
+
+table {
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 25px;
+}
+
+th {
+    background: #1e40af;
+    padding: 16px;
+}
+
+td {
+    padding: 15px;
+    color: #334155;
+}
+
+tr:nth-child(even) {
+    background: #eff6ff;
+}
+
+tr:hover {
+    background: #dbeafe;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    table {
+        font-size: 13px;
+    }
+}
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>DNS Lookup Tool</h1>
+
+    <form id="dnsForm">
+
+        <label>Website URL / Host</label>
+
+        <input
+            type="text"
+            id="domain"
+            placeholder="example.com"
+            required
+        >
+
+        <button type="submit">Get DNS Records</button>
+
+    </form>
+
+    <p id="message"></p>
+
+    <table id="result">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>DNS Record</th>
+            </tr>
+        </thead>
+
+        <tbody></tbody>
+    </table>
+
+</div>
+
+<script>
+document.getElementById("dnsForm").addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    let domain = document.getElementById("domain").value.trim();
+
+    const message = document.getElementById("message");
+    const tbody = document.querySelector("#result tbody");
+
+    tbody.innerHTML = "";
+    message.textContent = "Searching DNS records...";
+
+    const types = ["A", "AAAA", "MX", "NS", "TXT", "CNAME"];
+
+    try {
+        for (let type of types) {
+
+            let response = await fetch(
+                `https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=${type}`
+            );
+
+            if (!response.ok) continue;
+
+            let data = await response.json();
+
+            if (data.Answer) {
+                data.Answer.forEach(record => {
+
+                    let row = document.createElement("tr");
+
+                    let typeCell = document.createElement("td");
+                    typeCell.textContent = type;
+
+                    let valueCell = document.createElement("td");
+                    valueCell.textContent = record.data;
+
+                    row.appendChild(typeCell);
+                    row.appendChild(valueCell);
+
+                    tbody.appendChild(row);
+                });
+            }
+        }
+
+        message.textContent = tbody.children.length
+            ? "DNS records found!"
+            : "No DNS records found.";
+
+    } catch (error) {
+        message.textContent = "Error fetching DNS records. Check your internet connection.";
+    }
+
+});
+</script>
+
+</body>
+</html>
